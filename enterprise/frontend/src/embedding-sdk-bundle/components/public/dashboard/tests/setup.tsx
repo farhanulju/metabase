@@ -110,7 +110,7 @@ export const DEFAULT_DASHCARDS: DashboardCard[] = [
 ];
 
 export interface SetupSdkDashboardOptions {
-  props?: Partial<SdkDashboardProps>;
+  props?: Omit<Partial<SdkDashboardProps>, "token">;
   providerProps?: Partial<MetabaseProviderProps>;
   isLocaleLoading?: boolean;
   component: React.ComponentType<SdkDashboardProps>;
