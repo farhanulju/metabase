@@ -933,7 +933,7 @@
                                 dash-updates
                                 :present #{:description :position :width :collection_id :collection_position :cache_ttl :archived_directly :embedding_type}
                                 :non-nil #{:name :parameters :caveats :points_of_interest :show_in_getting_started :enable_embedding
-                                           :embedding_params :archived :auto_apply_filters}))]
+                                           :embedding_type :embedding_params :archived :auto_apply_filters}))]
              (when (api/column-will-change? :archived current-dash dash-updates)
                (if (:archived dash-updates)
                  (t2/update! :model/Card
