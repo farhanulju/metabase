@@ -10,29 +10,31 @@ import {
 import { getCurrentUser } from "metabase/admin/datamodel/selectors";
 import { usePurchaseCloudAddOnMutation } from "metabase/api";
 import ExternalLink from "metabase/common/components/ExternalLink";
-import Markdown from "metabase/common/components/Markdown";
 import { useSetting } from "metabase/common/hooks";
 import {
   Form,
   FormCheckbox,
   FormProvider,
+  FormRadioGroup,
   FormSubmitButton,
 } from "metabase/forms";
 import { useSelector } from "metabase/lib/redux";
-import { Divider, Flex, Group, List, Stack, Text } from "metabase/ui";
+import { Flex, Group, Radio, Stack, Text } from "metabase/ui";
 
 import { MetabotSettingUpModal } from "./MetabotSettingUpModal";
 import { handleFieldError, isFetchBaseQueryError } from "./utils";
 
 const validationSchema = Yup.object({
+  quantity: Yup.string(),
   terms_of_service: Yup.boolean(),
 });
 
-interface MetabotTrialFormFields {
+interface MetabotPurchaseFormFields {
+  quantity: string;
   terms_of_service: boolean;
 }
 
-export const MetabotTrialPage = () => {
+export const MetabotPurchasePage = () => {
   const currentUser = useSelector(getCurrentUser);
   const tokenStatus = useSetting("token-status");
   const storeUserEmails =
@@ -46,10 +48,11 @@ export const MetabotTrialPage = () => {
   const [settingUpModalOpened, settingUpModalHandlers] = useDisclosure(false);
   const [purchaseCloudAddOn] = usePurchaseCloudAddOnMutation();
   const onSubmit = useCallback(
-    async ({ terms_of_service }: MetabotTrialFormFields) => {
+    async ({ quantity, terms_of_service }: MetabotPurchaseFormFields) => {
       settingUpModalHandlers.open();
       await purchaseCloudAddOn({
-        product_type: "metabase-ai",
+        product_type: "metabase-ai-tiered",
+        quantity: parseInt(quantity, 10),
         terms_of_service,
       })
         .unwrap()
@@ -63,48 +66,54 @@ export const MetabotTrialPage = () => {
 
   return (
     <SettingsPageWrapper title={t`Metabot AI`}>
-      <SettingsSection
-        title={
-          /* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins. */
-          t`Get a free month of Metabot, the new AI assistant for Metabase.`
-        }
-      >
-        <Stack>
-          <Text>{t`Metabot helps you move faster and understand your data better. You can ask it to:`}</Text>
-          <List>
-            <List.Item>
-              <Markdown>{
-                /* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins. */
-                t`**Act as a SQL generation copilot** in the Metabase SQL editor`
-              }</Markdown>
-            </List.Item>
-            <List.Item>
-              <Markdown>{t`**Help you build queries** based on models and metrics in a specified collection`}</Markdown>
-            </List.Item>
-            <List.Item>
-              <Markdown>{t`**Explain queries** or existing charts`}</Markdown>
-            </List.Item>
-          </List>
-          <video controls aria-label={t`Demonstration of Metabot AI features`}>
-            <source
-              src="https://www.metabase.com/images/features/metabot.mp4"
-              type="video/mp4"
-            />
-            {t`Your browser does not support the video tag.`}
-          </video>
-          <Text>{t`Metabot is a new feature in active development. We're constantly rolling out improvements and appreciate your feedback.`}</Text>
-        </Stack>
-        <Divider />
-
-        {isStoreUser ? (
+      <Text>{t`Metabot helps you move faster and understand your data better. You can ask it to generate SQL, and build or explain queries.`}</Text>
+      {isStoreUser ? (
+        <SettingsSection title={t`Monthly usage limit`}>
           <FormProvider
-            initialValues={{ terms_of_service: false }}
+            initialValues={{ quantity: "500", terms_of_service: false }}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
           >
             {({ values }) => (
               <Form>
                 <Stack>
+                  <Text>{t`Usage is measured in Metabot requests. If a chat has multiple questions, they are counted as separate Metabot requests. Usage limit applies to your whole organization.`}</Text>{" "}
+                  <FormRadioGroup name="quantity">
+                    <Stack mt="md">
+                      <Radio
+                        value="500"
+                        label={
+                          <>
+                            <Text fw="bold">{t`Small`}</Text>
+                            <Text>{t`up to 500 requests/month`}</Text>
+                            <Text fw="bold">{t`$100/month`}</Text>
+                          </>
+                        }
+                      />
+                      <Radio
+                        value="1500"
+                        label={
+                          <>
+                            <Text fw="bold">{t`Medium`}</Text>
+                            <Text>{t`up to 1500 requests/month`}</Text>
+                            <Text fw="bold">{t`$300/month`}</Text>
+                          </>
+                        }
+                      />
+                      <Radio
+                        value="2500"
+                        label={
+                          <>
+                            <Text fw="bold">{t`Large`}</Text>
+                            <Text>{t`up to 2500 requests/month`}</Text>
+                            <Text fw="bold">{t`$500/month`}</Text>
+                          </>
+                        }
+                      />
+                    </Stack>
+                  </FormRadioGroup>
+                  {/* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins." */}
+                  <Text>{t`Additional amount for the add-on will be added to your next billing period invoice. You can cancel the add-on anytime in Metabase Store.`}</Text>
                   <FormCheckbox
                     name="terms_of_service"
                     label={
@@ -118,28 +127,25 @@ export const MetabotTrialPage = () => {
                     <Group align="center" gap="sm">
                       <FormSubmitButton
                         disabled={!values.terms_of_service}
-                        label={t`Add Metabot AI`}
+                        label={t`Confirm purchase`}
                         variant="filled"
                         mt="xs"
                       />
                     </Group>
                   </Flex>
-                  <Markdown>
-                    {t`Your first month is on us. **You won't be charged automatically.** After the trial, you can decide if you'd like to subscribe.`}
-                  </Markdown>
                 </Stack>
               </Form>
             )}
           </FormProvider>
-        ) : (
-          <Text fw="bold">
-            {
-              /* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins. */
-              t`Please ask a Metabase Store Admin${anyStoreUserEmailAddress && ` (${anyStoreUserEmailAddress})`} of your organization to enable this for you.`
-            }
-          </Text>
-        )}
-      </SettingsSection>
+        </SettingsSection>
+      ) : (
+        <Text fw="bold">
+          {
+            /* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins. */
+            t`Please ask a Metabase Store Admin${anyStoreUserEmailAddress && ` (${anyStoreUserEmailAddress})`} of your organization to enable this for you.`
+          }
+        </Text>
+      )}
       <MetabotSettingUpModal
         opened={settingUpModalOpened}
         onClose={() => {

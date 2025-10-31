@@ -264,8 +264,12 @@
   :ai-entity-analysis)
 
 (define-premium-feature ^{:added "0.55.0"} offer-metabase-ai?
-  "Offer Metabase AI add-on"
+  "Offer trial Metabase AI add-on"
   :offer-metabase-ai)
+
+(define-premium-feature ^{:added "0.57.0"} offer-metabase-ai-tiered?
+  "Offer paid Metabase AI add-on"
+  :offer-metabase-ai-tiered)
 
 (define-premium-feature ^{:added "0.56.0"} cloud-custom-smtp?
   "Can Metabase have a custom smtp details separate from the default Cloud details."
@@ -339,6 +343,7 @@
    :llm_autodescription            (enable-llm-autodescription?)
    :metabot_v3                     (enable-metabot-v3?)
    :offer_metabase_ai              (offer-metabase-ai?)
+   :offer_metabase_ai_tiered       (offer-metabase-ai-tiered?)
    :official_collections           (enable-official-collections?)
    :query_reference_validation     (enable-query-reference-validation?)
    :remote_sync                    (enable-remote-sync?)
