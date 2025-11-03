@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { t } from "ttag";
 import _ from "underscore";
 
-import MetabotLogo from "metabase/common/components/MetabotLogo";
+import { MetabotLogo } from "metabase/common/components/MetabotLogo";
 import animationStyles from "metabase/css/core/animation.module.css";
 import { useSelector } from "metabase/lib/redux";
 import { getUser } from "metabase/selectors/user";
