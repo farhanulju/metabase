@@ -93,13 +93,13 @@ index a75f606..52c5a0b 100644
      var transform = labelItem.transform;
      var label = labelItem.label;
      var labelLine = labelItem.labelLine;
-+    
++
 +    if (label.style.text === "") {
 +      hideEl(label);
 +      labelLine && hideEl(labelLine);
 +      continue;
 +    }
-+    
++
      globalRect.copy(labelItem.rect);
      // Add a threshold because layout may be aligned precisely.
      globalRect.width -= 0.1;
