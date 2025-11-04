@@ -66,9 +66,17 @@ export const MetabotPurchasePage = () => {
 
   return (
     <SettingsPageWrapper title={t`Metabot AI`}>
-      <Text>{t`Metabot helps you move faster and understand your data better. You can ask it to generate SQL, and build or explain queries.`}</Text>
+      <Text maw="26rem">{t`Metabot helps you move faster and understand your data better. You can ask it to generate SQL, and build or explain queries.`}</Text>
       {isStoreUser ? (
-        <SettingsSection title={t`Monthly usage limit`}>
+        <SettingsSection
+          title={t`Monthly usage limit`}
+          description={
+            <Text
+              maw="35rem"
+              mt="sm"
+            >{t`Usage is measured in Metabot requests. If a chat has multiple questions, they are counted as separate Metabot requests. Usage limit applies to your whole organization.`}</Text>
+          }
+        >
           <FormProvider
             initialValues={{ quantity: "500", terms_of_service: false }}
             onSubmit={onSubmit}
@@ -76,8 +84,7 @@ export const MetabotPurchasePage = () => {
           >
             {({ values }) => (
               <Form>
-                <Stack>
-                  <Text>{t`Usage is measured in Metabot requests. If a chat has multiple questions, they are counted as separate Metabot requests. Usage limit applies to your whole organization.`}</Text>{" "}
+                <Stack gap={0}>
                   <FormRadioGroup name="quantity">
                     <Stack>
                       <Radio
@@ -113,7 +120,7 @@ export const MetabotPurchasePage = () => {
                     </Stack>
                   </FormRadioGroup>
                   {/* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins." */}
-                  <Text>{t`Additional amount for the add-on will be added to your next billing period invoice. You can cancel the add-on anytime in Metabase Store.`}</Text>
+                  <Text maw="35rem">{t`Additional amount for the add-on will be added to your next billing period invoice. You can cancel the add-on anytime in Metabase Store.`}</Text>
                   <Card
                     bg="var(--mb-color-bg-light)"
                     p={12}
