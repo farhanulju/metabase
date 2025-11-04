@@ -22,11 +22,13 @@ import { getExperienceFromSettings } from "../utils/get-default-sdk-iframe-embed
 interface SdkIframeEmbedSetupProviderProps {
   children: ReactNode;
   initialState: SdkIframeEmbedSetupModalInitialState | undefined;
+  onClose: () => void;
 }
 
 export const SdkIframeEmbedSetupProvider = ({
   children,
   initialState,
+  onClose,
 }: SdkIframeEmbedSetupProviderProps) => {
   // We don't want to re-fetch the recent items every time we switch between
   // steps, therefore we load recent items once in the provider.
@@ -152,6 +154,7 @@ export const SdkIframeEmbedSetupProvider = ({
     embeddingParameters,
     onEmbeddingParametersChange,
     staticEmbeddingSignedToken,
+    onClose,
   };
 
   return (

@@ -64,6 +64,9 @@ export interface SdkIframeEmbedSetupContextType {
 
   // static embedding
   staticEmbeddingSignedToken: string | null;
+
+  // modal handlers
+  onClose: () => void;
 }
 
 export const SdkIframeEmbedSetupContext =

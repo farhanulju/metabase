@@ -53,6 +53,17 @@ export function publicDashboard(uuid: string) {
   return `${siteUrl}/public/dashboard/${uuid}`;
 }
 
+export function dashboardStaticLegacyWizard(dashboardId: DashboardId) {
+  if (typeof dashboardId === "string") {
+    return dashboardId;
+  }
+
+  return `/dashboard/${dashboardId}#${stringifyHashOptions({
+    modal: "dashboard-embed",
+    embedType: "static-legacy",
+  })}`;
+}
+
 export function embedDashboard(token: string) {
   const siteUrl = MetabaseSettings.get("site-url");
   return `${siteUrl}/embed/dashboard/${token}`;

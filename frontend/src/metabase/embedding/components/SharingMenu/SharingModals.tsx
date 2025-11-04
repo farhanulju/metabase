@@ -1,6 +1,7 @@
 import { type Ref, forwardRef } from "react";
 
 import { DashboardSharingEmbeddingModal } from "metabase/dashboard/containers/DashboardSharingEmbeddingModal";
+import type { EmbedModalStep } from "metabase/public/lib/types";
 import { QuestionEmbedWidget } from "metabase/query_builder/components/QuestionEmbedWidget";
 import { Box } from "metabase/ui";
 import type Question from "metabase-lib/v1/Question";
@@ -31,16 +32,19 @@ type SharingModalProps = BaseSharingModalProps &
   (
     | {
         modalType: QuestionSharingModalType;
+        initialEmbedType?: EmbedModalStep;
         question: Question;
         dashboard?: never;
       }
     | {
         modalType: DashboardSharingModalType;
+        initialEmbedType?: EmbedModalStep;
         dashboard: Dashboard;
         question?: never;
       }
     | {
         modalType: null;
+        initialEmbedType?: EmbedModalStep;
         question?: Question;
         dashboard?: Dashboard;
       }
@@ -48,6 +52,7 @@ type SharingModalProps = BaseSharingModalProps &
 
 export const SharingModals = ({
   modalType,
+  initialEmbedType,
   onClose,
   question,
   dashboard,
@@ -64,7 +69,13 @@ export const SharingModals = ({
   }
 
   if (modalType === "question-embed" && question) {
-    return <QuestionEmbedWidget card={question._card} onClose={onClose} />;
+    return (
+      <QuestionEmbedWidget
+        card={question._card}
+        initialEmbedType={initialEmbedType}
+        onClose={onClose}
+      />
+    );
   }
 
   if (modalType === "dashboard-public-link") {
@@ -83,6 +94,7 @@ export const SharingModals = ({
       <DashboardSharingEmbeddingModal
         key="dashboard-embed"
         dashboard={dashboard}
+        initialEmbedType={initialEmbedType}
         onClose={onClose}
         isOpen
       />

@@ -1,5 +1,6 @@
 import slugg from "slugg";
 
+import { stringifyHashOptions } from "metabase/lib/browser";
 import { serializeCardForUrl } from "metabase/lib/card";
 import MetabaseSettings from "metabase/lib/settings";
 import type { QuestionCreatorOpts } from "metabase-lib/v1/Question";
@@ -148,6 +149,13 @@ export function publicQuestion({
     (type ? `.${type}` : "") +
     searchQuery
   );
+}
+
+export function questionStaticLegacyWizard(questionId: number) {
+  return `/question/${questionId}#${stringifyHashOptions({
+    modal: "question-embed",
+    embedType: "static-legacy",
+  })}`;
 }
 
 export function embedCard(token: string, type: string | null = null) {

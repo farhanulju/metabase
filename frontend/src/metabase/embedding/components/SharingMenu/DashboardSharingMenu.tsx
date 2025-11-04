@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { isInstanceAnalyticsCollection } from "metabase/collections/utils";
 import { setSharing as setDashboardSubscriptionSidebarOpen } from "metabase/dashboard/actions";
 import { getIsSharing as getIsDashboardSubscriptionSidebarOpen } from "metabase/dashboard/selectors";
@@ -7,6 +5,8 @@ import { useDispatch, useSelector } from "metabase/lib/redux";
 import { DashboardSubscriptionMenuItem } from "metabase/notifications/NotificationsActionsMenu/DashboardSubscriptionMenuItem";
 import { Flex, Menu } from "metabase/ui";
 import type { Dashboard } from "metabase-types/api";
+
+import { useSharingModal } from "../../hooks/use-sharing-modal";
 
 import { EmbedMenuItem } from "./MenuItems/EmbedMenuItem";
 import { ExportPdfMenuItem } from "./MenuItems/ExportPdfMenuItem";
@@ -26,9 +26,10 @@ export function DashboardSharingMenu({ dashboard }: { dashboard: Dashboard }) {
       setDashboardSubscriptionSidebarOpen(!isDashboardSubscriptionSidebarOpen),
     );
 
-  const [modalType, setModalType] = useState<DashboardSharingModalType | null>(
-    null,
-  );
+  const { modalType, setModalType, initialEmbedType } =
+    useSharingModal<DashboardSharingModalType>({
+      resourceType: "dashboard",
+    });
 
   const hasPublicLink = !!dashboard?.public_uuid;
   const isArchived = dashboard.archived;
@@ -62,6 +63,7 @@ export function DashboardSharingMenu({ dashboard }: { dashboard: Dashboard }) {
       </SharingMenu>
       <SharingModals
         modalType={modalType}
+        initialEmbedType={initialEmbedType}
         dashboard={dashboard}
         onClose={() => setModalType(null)}
       />

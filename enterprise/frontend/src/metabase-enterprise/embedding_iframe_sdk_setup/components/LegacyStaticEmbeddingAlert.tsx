@@ -1,12 +1,18 @@
+import { replace } from "react-router-redux";
 import { c, t } from "ttag";
 
+import { useDispatch } from "metabase/lib/redux";
+import * as Urls from "metabase/lib/urls";
 import { Alert, Anchor, Box, Flex, Icon, Stack, Text } from "metabase/ui";
 import { useSdkIframeEmbedSetupContext } from "metabase-enterprise/embedding_iframe_sdk_setup/context";
 import { getResourceTypeFromExperience } from "metabase-enterprise/embedding_iframe_sdk_setup/utils/get-resource-type-from-experience";
+import type { Card, Dashboard } from "metabase-types/api";
 
 export const LegacyStaticEmbeddingAlert = () => {
-  const { settings, resource, experience } = useSdkIframeEmbedSetupContext();
+  const { settings, resource, experience, onClose } =
+    useSdkIframeEmbedSetupContext();
 
+  const dispatch = useDispatch();
   const isStaticEmbedding = !!settings.isStatic;
 
   const resourceType = getResourceTypeFromExperience(experience);
@@ -41,7 +47,26 @@ export const LegacyStaticEmbeddingAlert = () => {
             {t`This embed uses the legacy static embedding method. The controls shown are for the new embedding method, which is recommended.`}
           </Text>
 
-          <Anchor key="anchor" fw="bold" lh="lg">
+          <Anchor
+            key="anchor"
+            fw="bold"
+            lh="lg"
+            onClick={() => {
+              onClose();
+
+              dispatch(
+                replace({
+                  pathname:
+                    resourceType === "dashboard"
+                      ? Urls.dashboardStaticLegacyWizard(
+                          (resource as Dashboard).id,
+                        )
+                      : Urls.questionStaticLegacyWizard((resource as Card).id),
+                  state: { preserveNavbarState: true },
+                }),
+              );
+            }}
+          >
             {c("A link that toggles the legacy static embedding wizard.")
               .t`Use legacy static embedding (not recommended)`}
           </Anchor>

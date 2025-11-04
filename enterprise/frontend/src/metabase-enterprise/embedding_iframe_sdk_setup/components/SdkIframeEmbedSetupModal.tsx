@@ -159,7 +159,10 @@ export const SdkIframeEmbedSetupModal = ({
     onClose={onClose}
   >
     <Modal.Content style={{ overflow: "hidden" }}>
-      <SdkIframeEmbedSetupProvider initialState={initialState}>
+      <SdkIframeEmbedSetupProvider
+        initialState={initialState}
+        onClose={onClose}
+      >
         <SdkIframeEmbedSetupContent />
       </SdkIframeEmbedSetupProvider>
     </Modal.Content>
