@@ -19,7 +19,7 @@ import {
   FormSubmitButton,
 } from "metabase/forms";
 import { useSelector } from "metabase/lib/redux";
-import { Flex, Group, Radio, Stack, Text } from "metabase/ui";
+import { Card, Radio, Stack, Text } from "metabase/ui";
 
 import { MetabotSettingUpModal } from "./MetabotSettingUpModal";
 import { handleFieldError, isFetchBaseQueryError } from "./utils";
@@ -79,7 +79,7 @@ export const MetabotPurchasePage = () => {
                 <Stack>
                   <Text>{t`Usage is measured in Metabot requests. If a chat has multiple questions, they are counted as separate Metabot requests. Usage limit applies to your whole organization.`}</Text>{" "}
                   <FormRadioGroup name="quantity">
-                    <Stack mt="md">
+                    <Stack>
                       <Radio
                         value="500"
                         label={
@@ -114,25 +114,29 @@ export const MetabotPurchasePage = () => {
                   </FormRadioGroup>
                   {/* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins." */}
                   <Text>{t`Additional amount for the add-on will be added to your next billing period invoice. You can cancel the add-on anytime in Metabase Store.`}</Text>
-                  <FormCheckbox
-                    name="terms_of_service"
-                    label={
-                      <Text>
-                        {t`I agree with the Metabot AI add-on`}{" "}
-                        <ExternalLink href="https://www.metabase.com/license/hosting">{t`Terms of Service`}</ExternalLink>
-                      </Text>
-                    }
+                  <Card
+                    bg="var(--mb-color-bg-light)"
+                    p={12}
+                    radius="md"
+                    shadow="none"
+                    w="100%"
+                  >
+                    <FormCheckbox
+                      name="terms_of_service"
+                      label={
+                        <Text>
+                          {t`I agree with the Metabot AI add-on`}{" "}
+                          <ExternalLink href="https://www.metabase.com/license/hosting">{t`Terms of Service`}</ExternalLink>
+                        </Text>
+                      }
+                    />
+                  </Card>
+                  <FormSubmitButton
+                    disabled={!values.terms_of_service}
+                    label={t`Confirm purchase`}
+                    variant="filled"
+                    w="100%"
                   />
-                  <Flex justify="start">
-                    <Group align="center" gap="sm">
-                      <FormSubmitButton
-                        disabled={!values.terms_of_service}
-                        label={t`Confirm purchase`}
-                        variant="filled"
-                        mt="xs"
-                      />
-                    </Group>
-                  </Flex>
                 </Stack>
               </Form>
             )}
