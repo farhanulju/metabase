@@ -121,9 +121,11 @@ export const MetabotPurchasePage = () => {
                       </Stack>
                     </FormRadioGroup>
                   </Card>
+
                   <Stack gap="md">
                     {/* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins." */}
                     <Text maw="35rem">{t`Additional amount for the add-on will be added to your next billing period invoice. You can cancel the add-on anytime in Metabase Store.`}</Text>
+
                     <Card
                       bg="var(--mb-color-bg-light)"
                       p={12}
@@ -141,6 +143,7 @@ export const MetabotPurchasePage = () => {
                         }
                       />
                     </Card>
+
                     <FormSubmitButton
                       disabled={!values.terms_of_service}
                       label={t`Confirm purchase`}
