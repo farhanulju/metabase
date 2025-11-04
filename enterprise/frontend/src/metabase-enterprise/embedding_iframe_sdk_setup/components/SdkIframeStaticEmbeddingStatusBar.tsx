@@ -5,6 +5,7 @@ import {
   useUpdateDashboardEnableEmbeddingMutation,
 } from "metabase/api";
 import { useSetting } from "metabase/common/hooks";
+import { STATIC_EMBED_JS_EMBEDDING_TYPE } from "metabase/embedding/constants";
 import { EmbedModalContentStatusBar } from "metabase/public/components/EmbedModal/StaticEmbedSetupPane/EmbedModalContentStatusBar";
 import type { StaticEmbedSetupPaneProps } from "metabase/public/components/EmbedModal/StaticEmbedSetupPane/StaticEmbedSetupPane";
 import { getHasSettingsChanges } from "metabase/public/components/EmbedModal/StaticEmbedSetupPane/lib/get-has-settings-changes";
@@ -48,7 +49,7 @@ const SdkIframeStaticEmbeddingStatusBarInner = ({
     await handlersMap[resourceType]?.({
       id: resource.id as number,
       enable_embedding: enableEmbedding,
-      embedding_type: enableEmbedding ? "static-embed-js" : null,
+      embedding_type: enableEmbedding ? STATIC_EMBED_JS_EMBEDDING_TYPE : null,
     });
   };
 
@@ -63,7 +64,7 @@ const SdkIframeStaticEmbeddingStatusBarInner = ({
     await handlersMap[resourceType]?.({
       id: resource.id as number,
       embedding_params: embeddingParams,
-      embedding_type: "static-embed-js",
+      embedding_type: STATIC_EMBED_JS_EMBEDDING_TYPE,
     });
   };
 
