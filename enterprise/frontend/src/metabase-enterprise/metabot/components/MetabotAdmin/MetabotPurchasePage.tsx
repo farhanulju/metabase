@@ -84,66 +84,70 @@ export const MetabotPurchasePage = () => {
           >
             {({ values }) => (
               <Form>
-                <Stack gap={0}>
-                  <FormRadioGroup name="quantity">
-                    <Stack>
-                      <Radio
-                        value="500"
-                        label={
-                          <>
-                            <Text fw="bold">{t`Small`}</Text>
-                            <Text>{t`up to 500 requests/month`}</Text>
-                            <Text fw="bold">{t`$100/month`}</Text>
-                          </>
-                        }
-                      />
-                      <Radio
-                        value="1500"
-                        label={
-                          <>
-                            <Text fw="bold">{t`Medium`}</Text>
-                            <Text>{t`up to 1500 requests/month`}</Text>
-                            <Text fw="bold">{t`$300/month`}</Text>
-                          </>
-                        }
-                      />
-                      <Radio
-                        value="2500"
-                        label={
-                          <>
-                            <Text fw="bold">{t`Large`}</Text>
-                            <Text>{t`up to 2500 requests/month`}</Text>
-                            <Text fw="bold">{t`$500/month`}</Text>
-                          </>
-                        }
-                      />
-                    </Stack>
-                  </FormRadioGroup>
-                  {/* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins." */}
-                  <Text maw="35rem">{t`Additional amount for the add-on will be added to your next billing period invoice. You can cancel the add-on anytime in Metabase Store.`}</Text>
-                  <Card
-                    bg="var(--mb-color-bg-light)"
-                    p={12}
-                    radius="md"
-                    shadow="none"
-                    w="100%"
-                  >
-                    <FormCheckbox
-                      name="terms_of_service"
-                      label={
-                        <Text>
-                          {t`I agree with the Metabot AI add-on`}{" "}
-                          <ExternalLink href="https://www.metabase.com/license/hosting">{t`Terms of Service`}</ExternalLink>
-                        </Text>
-                      }
-                    />
+                <Stack gap="xl">
+                  <Card withBorder>
+                    <FormRadioGroup name="quantity">
+                      <Stack>
+                        <Radio
+                          value="500"
+                          label={
+                            <>
+                              <Text fw="bold">{t`Small`}</Text>
+                              <Text>{t`up to 500 requests/month`}</Text>
+                              <Text fw="bold">{t`$100/month`}</Text>
+                            </>
+                          }
+                        />
+                        <Radio
+                          value="1500"
+                          label={
+                            <>
+                              <Text fw="bold">{t`Medium`}</Text>
+                              <Text>{t`up to 1500 requests/month`}</Text>
+                              <Text fw="bold">{t`$300/month`}</Text>
+                            </>
+                          }
+                        />
+                        <Radio
+                          value="2500"
+                          label={
+                            <>
+                              <Text fw="bold">{t`Large`}</Text>
+                              <Text>{t`up to 2500 requests/month`}</Text>
+                              <Text fw="bold">{t`$500/month`}</Text>
+                            </>
+                          }
+                        />
+                      </Stack>
+                    </FormRadioGroup>
                   </Card>
-                  <FormSubmitButton
-                    disabled={!values.terms_of_service}
-                    label={t`Confirm purchase`}
-                    variant="filled"
-                    w="100%"
-                  />
+                  <Stack gap="md">
+                    {/* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins." */}
+                    <Text maw="35rem">{t`Additional amount for the add-on will be added to your next billing period invoice. You can cancel the add-on anytime in Metabase Store.`}</Text>
+                    <Card
+                      bg="var(--mb-color-bg-light)"
+                      p={12}
+                      radius="md"
+                      shadow="none"
+                      w="100%"
+                    >
+                      <FormCheckbox
+                        name="terms_of_service"
+                        label={
+                          <Text>
+                            {t`I agree with the Metabot AI add-on`}{" "}
+                            <ExternalLink href="https://www.metabase.com/license/hosting">{t`Terms of Service`}</ExternalLink>
+                          </Text>
+                        }
+                      />
+                    </Card>
+                    <FormSubmitButton
+                      disabled={!values.terms_of_service}
+                      label={t`Confirm purchase`}
+                      variant="filled"
+                      w="100%"
+                    />
+                  </Stack>
                 </Stack>
               </Form>
             )}
