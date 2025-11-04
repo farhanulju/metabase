@@ -12,5 +12,6 @@ import "./shared";
 import "./embedding";
 import "./embedding-sdk";
 import "./metabot";
+import "./embedding-sdk-bundle-plugins";
 
 initializeSdkPlugins();

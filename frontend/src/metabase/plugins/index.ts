@@ -604,6 +604,22 @@ export const PLUGIN_EMBEDDING_IFRAME_SDK_SETUP = {
   ): ReactNode => null,
 };
 
+export const PLUGIN_EMBEDDING_SDK_AUTH = {
+  initAuth: async (
+    _config: any, // should be `MetabaseAuthConfig & { isLocalHost?: boolean }` but we can't import it for now (it's EE code)
+    _dispatch: { dispatch: ReduxDispatch },
+  ): Promise<void> => {
+    console.warn("[initAuth] noop called");
+  },
+  refreshTokenAsync: async (
+    _config: any,
+    _getState: any,
+  ): Promise<any | null> => {
+    console.warn("[refreshTokenAsync] noop called");
+    return null;
+  },
+};
+
 export const PLUGIN_CONTENT_VERIFICATION = {
   contentVerificationEnabled: false,
   VerifiedFilter: {} as SearchFilterComponent<"verified">,
