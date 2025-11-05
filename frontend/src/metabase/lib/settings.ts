@@ -64,6 +64,31 @@ class MetabaseSettings {
     this._settings = settings;
   }
 
+  async reset(): Promise<Partial<Settings>> {
+    return fetch("./").then((value) => {
+      return value.text().then((text) => {
+        const regex = new RegExp(
+          /(?<=\<script type=\"application\/json\" id=\"_metabaseBootstrap\"\>\s+)(.*?)(?=\<\/script\>)/gms,
+        );
+
+        const allSettingsStrMatches = text.match(regex);
+        if (allSettingsStrMatches && allSettingsStrMatches.length > 0) {
+          const [settingsStr] = allSettingsStrMatches;
+
+          try {
+            const settings = JSON.parse(settingsStr);
+            this._settings = settings;
+            console.warn("Settings are reset successfully");
+          } catch (err) {
+            console.error(err);
+          }
+        }
+
+        return this._settings;
+      });
+    });
+  }
+
   /**
    * @deprecated use getSetting(state, key)
    */
