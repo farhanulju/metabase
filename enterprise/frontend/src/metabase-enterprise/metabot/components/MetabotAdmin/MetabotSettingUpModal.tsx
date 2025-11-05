@@ -71,24 +71,21 @@ export const MetabotSettingUpModal = ({
             </Text>
           </Box>
         ) : (
-          <Box ta="center">
-            <Title c="text-primary" fz="lg">
-              {t`Metabot AI is ready`}
-            </Title>
-            <Text c="text-secondary" fz="md" lh={1.43}>
-              {t`Happy exploring!`}
-            </Text>
-          </Box>
-        )}
+          <>
+            <Box ta="center">
+              <Title c="text-primary" fz="lg">
+                {t`Metabot AI is ready`}
+              </Title>
+              <Text c="text-secondary" fz="md" lh={1.43}>
+                {t`Happy exploring!`}
+              </Text>
+            </Box>
 
-        <Button
-          disabled={isSettingUp}
-          variant="filled"
-          size="md"
-          onClick={onClose}
-        >
-          {t`Done`}
-        </Button>
+            <Button variant="filled" size="md" onClick={onClose}>
+              {t`Done`}
+            </Button>
+          </>
+        )}
       </Stack>
     </Modal>
   );
