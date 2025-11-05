@@ -1,5 +1,5 @@
 import type { MetabaseAuthConfig } from "embedding-sdk-bundle/types/auth-config";
-import type { MetabaseEmbeddingSessionToken } from "embedding-sdk-bundle/types/refresh-token";
+import type { MetabaseEmbeddingSessionToken } from "metabase/embedding-sdk/types/refresh-token";
 import { createAsyncThunk } from "metabase/lib/redux";
 import { PLUGIN_EMBEDDING_SDK_AUTH } from "metabase/plugins";
 
