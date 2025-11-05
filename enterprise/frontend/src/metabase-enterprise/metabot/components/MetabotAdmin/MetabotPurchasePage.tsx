@@ -15,12 +15,12 @@ import {
   Form,
   FormCheckbox,
   FormProvider,
-  FormRadioGroup,
   FormSubmitButton,
 } from "metabase/forms";
 import { useSelector } from "metabase/lib/redux";
-import { Card, Radio, Stack, Text } from "metabase/ui";
+import { Card, Stack, Text } from "metabase/ui";
 
+import { MetabotRadios } from "./MetabotPurchasePage.components";
 import { MetabotSettingUpModal } from "./MetabotSettingUpModal";
 import { handleFieldError, isFetchBaseQueryError } from "./utils";
 
@@ -85,42 +85,7 @@ export const MetabotPurchasePage = () => {
             {({ values }) => (
               <Form>
                 <Stack gap="xl">
-                  <Card withBorder>
-                    <FormRadioGroup name="quantity">
-                      <Stack>
-                        <Radio
-                          value="500"
-                          label={
-                            <>
-                              <Text fw="bold">{t`Small`}</Text>
-                              <Text>{t`up to 500 requests/month`}</Text>
-                              <Text fw="bold">{t`$100/month`}</Text>
-                            </>
-                          }
-                        />
-                        <Radio
-                          value="1500"
-                          label={
-                            <>
-                              <Text fw="bold">{t`Medium`}</Text>
-                              <Text>{t`up to 1500 requests/month`}</Text>
-                              <Text fw="bold">{t`$300/month`}</Text>
-                            </>
-                          }
-                        />
-                        <Radio
-                          value="2500"
-                          label={
-                            <>
-                              <Text fw="bold">{t`Large`}</Text>
-                              <Text>{t`up to 2500 requests/month`}</Text>
-                              <Text fw="bold">{t`$500/month`}</Text>
-                            </>
-                          }
-                        />
-                      </Stack>
-                    </FormRadioGroup>
-                  </Card>
+                  <MetabotRadios />
 
                   <Stack gap="md">
                     {/* eslint-disable-next-line no-literal-metabase-strings -- This string only shows for admins." */}
