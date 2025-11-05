@@ -54,6 +54,10 @@ const PASSWORD_COMPLEXITY_CLAUSES = {
   },
 };
 
+const BOOTSTRAP_REGEXP = new RegExp(
+  /(?<=\<script type=\"application\/json\" id=\"_metabaseBootstrap\"\>\s+)(.*?)(?=\<\/script\>)/gms,
+);
+
 type SettingListener = (value: any) => void;
 
 class MetabaseSettings {
@@ -64,29 +68,21 @@ class MetabaseSettings {
     this._settings = settings;
   }
 
-  async reset(): Promise<Partial<Settings>> {
-    return fetch("./").then((value) => {
-      return value.text().then((text) => {
-        const regex = new RegExp(
-          /(?<=\<script type=\"application\/json\" id=\"_metabaseBootstrap\"\>\s+)(.*?)(?=\<\/script\>)/gms,
-        );
-
-        const allSettingsStrMatches = text.match(regex);
-        if (allSettingsStrMatches && allSettingsStrMatches.length > 0) {
-          const [settingsStr] = allSettingsStrMatches;
-
-          try {
-            const settings = JSON.parse(settingsStr);
-            this._settings = settings;
-            console.warn("Settings are reset successfully");
-          } catch (err) {
-            console.error(err);
-          }
-        }
-
-        return this._settings;
-      });
-    });
+  async reset() {
+    try {
+      const response = await fetch("./");
+      const responseText = await response.text();
+      const allSettingsStrMatches = responseText.match(BOOTSTRAP_REGEXP);
+      if (allSettingsStrMatches && allSettingsStrMatches.length > 0) {
+        const [settingsStr] = allSettingsStrMatches;
+        const settings = JSON.parse(settingsStr);
+        this._settings = settings;
+        console.warn("Reset settings successful");
+      }
+    } catch (err) {
+      console.error("Reset settings error");
+      console.error(err);
+    }
   }
 
   /**
