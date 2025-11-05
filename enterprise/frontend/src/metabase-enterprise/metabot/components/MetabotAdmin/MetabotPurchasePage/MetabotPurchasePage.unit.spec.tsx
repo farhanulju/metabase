@@ -14,7 +14,7 @@ import {
 } from "metabase-types/api/mocks";
 import { createMockSettingsState } from "metabase-types/store/mocks";
 
-import { MetabotPurchasePage } from "./MetabotPurchasePage";
+import { MetabotPurchasePage } from ".";
 
 const setupRefreshableProperties = ({
   current_user_matches_store_user,

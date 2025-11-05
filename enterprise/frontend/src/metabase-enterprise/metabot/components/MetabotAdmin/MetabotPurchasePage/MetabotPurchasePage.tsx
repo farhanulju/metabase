@@ -1,5 +1,5 @@
 import { useDisclosure } from "@mantine/hooks";
-import { useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 import { t } from "ttag";
 import * as Yup from "yup";
 
@@ -20,21 +20,18 @@ import {
 import { useSelector } from "metabase/lib/redux";
 import { Card, Stack, Text } from "metabase/ui";
 
+import { MetabotSettingUpModal } from "../MetabotSettingUpModal";
+import { handleFieldError, isFetchBaseQueryError } from "../utils";
+
 import { MetabotRadios } from "./MetabotPurchasePage.components";
-import { MetabotSettingUpModal } from "./MetabotSettingUpModal";
-import { handleFieldError, isFetchBaseQueryError } from "./utils";
+import type { MetabotPurchaseFormFields } from "./types";
 
 const validationSchema = Yup.object({
   quantity: Yup.string(),
   terms_of_service: Yup.boolean(),
 });
 
-interface MetabotPurchaseFormFields {
-  quantity: string;
-  terms_of_service: boolean;
-}
-
-export const MetabotPurchasePage = () => {
+export function MetabotPurchasePage(): ReactElement {
   const currentUser = useSelector(getCurrentUser);
   const tokenStatus = useSetting("token-status");
   const storeUserEmails =
@@ -84,7 +81,7 @@ export const MetabotPurchasePage = () => {
           >
             {({ values }) => (
               <Form>
-                <Stack gap="xl">
+                <Stack gap="xl" w="100%">
                   <MetabotRadios />
 
                   <Stack gap="md">
@@ -138,4 +135,4 @@ export const MetabotPurchasePage = () => {
       />
     </SettingsPageWrapper>
   );
-};
+}
