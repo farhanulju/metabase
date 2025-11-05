@@ -23,6 +23,10 @@ export const radioOverrides = {
       root: {
         "--radio-size": getSize(SIZES[size]),
       },
+      labelWrapper: {
+        marginTop: -2,
+        width: "100%",
+      },
     }),
   }),
   RadioIndicator: Radio.Indicator.extend({
