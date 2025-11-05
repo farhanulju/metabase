@@ -126,6 +126,7 @@ export function MetabotPurchasePage(): ReactElement {
           }
         </Text>
       )}
+
       <MetabotSettingUpModal
         opened={settingUpModalOpened}
         onClose={() => {

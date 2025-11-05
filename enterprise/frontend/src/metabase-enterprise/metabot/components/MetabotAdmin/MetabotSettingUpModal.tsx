@@ -36,6 +36,7 @@ export const MetabotSettingUpModal = ({
       <Stack align="center" gap="lg" my="4.5rem">
         <Box h={96} pos="relative" w={96}>
           <MetabotLogo variant="cloud" alt={t`Metabot Cloud`} />
+
           {isSettingUp && (
             <Flex
               bottom={0}
@@ -59,6 +60,7 @@ export const MetabotSettingUpModal = ({
             </Flex>
           )}
         </Box>
+
         {isSettingUp ? (
           <Box ta="center">
             <Title c="text-primary" fz="lg">
@@ -78,6 +80,7 @@ export const MetabotSettingUpModal = ({
             </Text>
           </Box>
         )}
+
         <Button
           disabled={isSettingUp}
           variant="filled"
