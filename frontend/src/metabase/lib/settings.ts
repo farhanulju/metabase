@@ -68,6 +68,9 @@ class MetabaseSettings {
     this._settings = settings;
   }
 
+  /**
+   * @deprecated use reset()
+   */
   async reset() {
     try {
       const response = await fetch("./");
