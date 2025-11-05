@@ -19,7 +19,9 @@ import {
   FormSubmitButton,
 } from "metabase/forms";
 import { useSelector } from "metabase/lib/redux";
+import MetabaseSettings from "metabase/lib/settings";
 import { Divider, Flex, Group, List, Stack, Text } from "metabase/ui";
+import { hasPremiumFeature } from "metabase-enterprise/settings";
 
 import { MetabotSettingUpModal } from "./MetabotSettingUpModal";
 import { handleFieldError, isFetchBaseQueryError } from "./utils";
@@ -144,7 +146,19 @@ export const MetabotTrialPage = () => {
         opened={settingUpModalOpened}
         onClose={() => {
           settingUpModalHandlers.close();
-          window.location.reload();
+
+          // window.location.reload();
+          MetabaseSettings.reset().then(() => {
+            console.warn(
+              "offer_metabase_ai_tiered:",
+              hasPremiumFeature("offer_metabase_ai_tiered"),
+            );
+            console.warn(
+              "offer_metabase_ai:",
+              hasPremiumFeature("offer_metabase_ai"),
+            );
+            console.warn("---");
+          });
         }}
       />
     </SettingsPageWrapper>
